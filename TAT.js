@@ -13,6 +13,8 @@ function toggleTheme() {
     "preferred-theme",
     theme === "light" ? "dark" : "light"
   );
+
+  torch.textContent = theme === "light" ? "☼" : "\u263E";
 }
 
 
