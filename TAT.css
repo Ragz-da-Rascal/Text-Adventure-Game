@@ -1,8 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Sedan+SC&display=swap');
+
 *,
 *::before,
 *::after {
     box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Sedan SC', Tahoma, Geneva, Verdana, sans-serif;
 
 }
 
@@ -39,7 +41,7 @@
     --warning: oklch(0.3 0.06 100);
     --success: oklch(0.3 0.06 160);
     --info: oklch(0.3 0.06 260);
-    --shadow: 0 10px 10px rgba(0, 0, 0, 0.4); 
+    --shadow: 0 10px 10px rgba(0, 0, 0, 0.4);
 }
 
 body {
@@ -98,7 +100,7 @@ p {
     font-size: 1.5rem;
 }
 
-.tools button:hover{
+.tools button:hover {
     border-color: var(--highlight);
     background-color: var(--secondary);
 }
@@ -127,47 +129,60 @@ button:hover {
 }
 
 .content #text {
-  text-align: center;
-  padding: clamp(1rem, 2vw, 2rem);       /* scales padding */
-  color: var(--text);
-  font-family: 'EB Garamond', serif;
+    text-align: center;
+    padding: clamp(1rem, 2vw, 2rem);
+    /* scales padding */
+    color: var(--text);
+    font-family: 'EB Garamond', serif;
 
-  font-size: clamp(1rem, 2.5vw, 1.8rem); /* scales headline text */
-  line-height: 1.6;                      /* keep readable flow */
-  max-width: 60ch;                       /* don't let it stretch too much */
-  margin: 0 auto;
+    font-size: clamp(1rem, 2.5vw, 1.8rem);
+    /* scales headline text */
+    line-height: 1.6;
+    /* keep readable flow */
+    max-width: 60ch;
+    /* don't let it stretch too much */
+    margin: 0 auto;
 
-  text-shadow: 0 0 12px rgba(255,255,255,0.15);
+    text-shadow: 0 0 12px rgba(255, 255, 255, 0.15);
 
-  opacity: 0;
-  transform: translateY(15px);
-  animation: fadeInUp 0.8s ease forwards;
+    opacity: 0;
+    transform: translateY(15px);
+    animation: fadeInUp 0.8s ease forwards;
 }
 
 @keyframes fadeInUp {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
+
 #option-buttons {
     display: flex;
-    flex-flow: row wrap;
+    flex-wrap: wrap;
+    /* allow wrapping into rows */
     justify-content: center;
-    align-items: center;
+    /* center row content */
     gap: 0.5rem;
+    /* space between buttons */
     width: 70%;
-    margin-top: 20px;
+    margin: 20px auto 0;
 }
 
 .btn {
+    flex: 1 1 calc(50% - 0.5rem);
+    /* ~half container width minus gap */
+    text-align: center;
+    box-sizing: border-box;
+    font-size: clamp(0.9rem, 2vw, 1.2rem);
+    padding: clamp(0.5rem, 2vw, 1rem) clamp(1rem, 4vw, 1.5rem);
+    border-radius: 8px;
+    margin: clamp(0.5rem, 1.5vh, 1rem) 0;
     background-color: var(--primary);
-    width: 100%;
     border: var(--border-card);
-    border-radius: 5px;
-    padding: 5px 10px;
     color: var(--bg-dark);
     cursor: pointer;
+    width: 100%
 }
 
 .btn:hover {
