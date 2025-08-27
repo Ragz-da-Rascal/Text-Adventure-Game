@@ -8,7 +8,7 @@ function toggleTheme() {
   const root = document.documentElement;
   const theme = root.getAttribute("preferred-theme");
   const torch = document.getElementById("theme-toggle");
-  console.log(torch);
+  
   root.setAttribute(
     "preferred-theme",
     theme === "light" ? "dark" : "light"
@@ -24,24 +24,29 @@ function startGame(){
 }
 
 function showTextNode(textNodeIndex){
-   const textNode =  textNodes.find(textNode => textNode.id === textNodeIndex);
-    textElemnt.innerText = textNode.text;
-    while(options.firstChild){
+   const textNode = textNodes.find(textNode => textNode.id === textNodeIndex);
+   
+   textElemnt.innerText = textNode.text;
+
+   // 🔥 reset animation
+   textElemnt.style.animation = 'none';        // remove animation
+   void textElemnt.offsetWidth;                // trigger reflow (forces browser to acknowledge the reset)
+   textElemnt.style.animation = '';            // reapply animation from CSS
+
+   // Clear old buttons
+   while(options.firstChild){
         options.removeChild(options.firstChild)
-    }
+   }
     
-    textNode.options.forEach(option => {
-        if(showOption(option)) {
+   textNode.options.forEach(option => {
+       if(showOption(option)) {
          const button = document.createElement('button');
          button.innerText = option.text;
          button.classList.add('btn');
          button.addEventListener('click', () => selectOption(option));
          options.appendChild(button);
-         
-              
-        }
-    })
-    
+       }
+   })
 }
 
 function showOption(option) {
@@ -55,6 +60,20 @@ function selectOption(option) {
     }
     state = Object.assign(state, option.setState);
     showTextNode(nextTextNodeId);
+}
+
+const deathTags = [
+    `Maybe next time around you'll consider more plausible choices for someone with your... unfortunate disposition.`,
+    `Timmy, at least die with some semblance of grace. Convulsing like an newborn is no way for the choosen to perish.`,
+    `Tsk, tsk... the prophecy foretold of heroic deeds, not the pantomime of a dying child.`,
+    `You have met a terrible fate, haven't you? Now, now, once more, to the brink with you.`,
+    `Ah, how poetic. The child who dreamt of glory ends bloated in his own mediocrity.`,
+    `Timothy, bravery without thought is just suicide with extra steps.`,
+    `The ballads written about you will be mired with notes of laughter... and not much else.`,
+    `You've fallen, Timmy, but take comfort in the fact that gravity has never judged the weak.`
+];
+const deathTagGenerator = (arr) => {
+    return arr[Math.floor(Math.random() * arr.length)];
 }
 
 const textNodes = [
@@ -83,7 +102,7 @@ const textNodes = [
             nextText: 2
     },
         {
-            text: `Stored the partially eaten, molded cheese.`,
+            text: `Store the partially eaten, molded cheese.`,
             setState: {cheese: true},
             nextText: 2
     },
@@ -95,7 +114,7 @@ const textNodes = [
     },
     {
         id: 2,
-        text: `You exit your living quarters to face your morning dose of hardship. A stout boy winding his stump leg to kick you in the testicles, as is the fate of the unfortunate. How do you navigate around this malnourished piglet?`,
+        text: `You exit your living quarters to face your morning dose of hardship. A stout boy winding his stump leg to kick you in the testicles, as is the fate of the unfortunate. How do you navigate around this rotund piglet?`,
         options: [
             {
                 text: `Attempt to strike him with the stick.`,
@@ -173,7 +192,7 @@ const textNodes = [
     },
     {
         id: 4,
-        text: `Well, your choice as well as your death. Maybe next time around when you consider plausible options for someone with your unfortunate disposition, you will choose the choice that doesn’t end with a dead child.`,
+        text: deathTagGenerator(deathTags),
         options: [
             {
                 text: `The burlap sack didn’t do what you were hoping it would. Instead, the child’s thick toes rupture your scrotum and you collapse in confusion and guttural pain. You bleed out and create a crimson puddle carrying your testes. As you fade off to oblivion you see him wiping his feet on your soon to be a corpse. The cloth isn’t armor, I feel as if I shouldn’t be telling you this.`,
@@ -186,12 +205,12 @@ const textNodes = [
                 nextText: -1
             },
             {
-                text: `You start flailing your malnourished limbs in several sexual seductive ways. The child becomes flustered and very confused and what we don’t understand we fear. He tackles you and starts blubbering as he pounds your skull into the floor. Before you drift into oblivion, you feel something poking your abdomen.`,
+                text: `You start flailing your malnourished limbs in several sexual seductive poses. The child becomes flustered and very confused and what we don’t understand we fear. He tackles you and starts blubbering as he pounds your skull into the floor. Before you drift into oblivion, you feel something poking your sternum.`,
                 requiredState: (currentState) => currentState.confusedSexualFrustration,
                 nextText: -1
             },
             {
-                text: ``,
+                text: `As they say, the most evasive manuever is the one not taken. Bound to make the aggressor question their actions, possibly leading to a blunder, perhaps even crumble to their knees in the presence of true stoicism? Well, now you have all the time in the world to ponder these possibilities as you feel your hipbone become displaced within your torso. To take away your ability to even soil yourself in death, the cruelty of this adolescent swine knows no bounds.`,
                 requiredState: (currentState) => currentState.anIdiotsDeath,
                 nextText: -1
             },
